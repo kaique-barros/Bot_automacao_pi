@@ -1,0 +1,22 @@
+main.py::TesteGgmaxComApi::test_login_com_solucao_via_api
+--------------------------------------------------------------------
+Last Page: https://ggmax.com.br/
+ Duration: 3.79s
+  Browser: Chrome 141.0.7390.54
+   Driver: chromedriver 141.0.7390.54
+Timestamp: 1759512963  (Unix Timestamp)
+     Date: Friday, 3 October 2025
+     Time: 2:36:03 PM  (-03, UTC-03:00)
+--------------------------------------------------------------------
+Traceback:
+  File "/home/kaiqbbrs/PiJr/BotAutomacao/main.py", line 47, in test_login_com_solucao_via_api
+    token_captcha = self.solve_turnstile_via_api()
+  File "/home/kaiqbbrs/PiJr/BotAutomacao/main.py", line 27, in solve_turnstile_via_api
+    solution = capsolver.solve({
+        "type": "AntiCloudflareTaskProxyLess",
+        "websiteURL": PAGE_URL,
+        "websiteKey": GGMAX_SITE_KEY
+    })
+  File "/home/kaiqbbrs/PiJr/BotAutomacao/.venv/lib/python3.13/site-packages/capsolver/capsolver.py", line 39, in solve
+    raise r
+Exception: InvalidRequestError: The sitekey is challenge, not turnstile.
