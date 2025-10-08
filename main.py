@@ -4,9 +4,6 @@ from seleniumbase import Driver
 from src.proxy import Proxy
 import threading
 import ngrok
-from dotenv import load_dotenv
-
-load_dotenv(override=True)
 
 # -----------------------------------------------------------------------------------------------------
 # ------------------- CONFIGURAÇÔES -------------------------------------------------------------------
