@@ -5,7 +5,6 @@ from src.proxy import Proxy
 import threading
 import ngrok
 from dotenv import load_dotenv
-import os
 
 load_dotenv(override=True)
 
@@ -13,17 +12,17 @@ load_dotenv(override=True)
 # ------------------- CONFIGURAÇÔES -------------------------------------------------------------------
 # --- Chaves de API
 CAPSOLVER_API_KEY = 'CAP-ED5DF302811B699CA76FC80712D56EF5044F6B693FFF7E5E53DCD377F7CF28B0'
-NGROK_KEY = '33nepndDespFrKvWB8LueTLZVbj_7pMXHYADta3Vy2Q5JHeTM'
+NGROK_KEY =         '33nepndDespFrKvWB8LueTLZVbj_7pMXHYADta3Vy2Q5JHeTM'
 
 # --- Configurações do scrapper
-GGMAX_SITE_KEY = "0x4AAAAAAADnPIDROrmt1Wwj" 
-PAGE_URL = "https://ggmax.com.br/anuncio/venda-de-brinrots-raros-no-roblox-entrega-rapida-e-segura"
+GGMAX_SITE_KEY =    '0x4AAAAAAADnPIDROrmt1Wwj' 
+PAGE_URL =          'https://ggmax.com.br/anuncio/venda-de-brinrots-raros-no-roblox-entrega-rapida-e-segura'
 
 # --- Configurações do proxy
-PROXY_USER = '98d5e8f4b835e0968ce439df645264ba3dbea6d17f374a5afe83846be09fdb4c'
-PROXY_PASS = 'b4604382119649c7f6fdb81bb4071204ccebded8a31cc0f555605d5ce14a8bed'
-PROXY_IP = '127.0.0.1'
-PROXY_PORT = 5001
+PROXY_USER =        '98d5e8f4b835e0968ce439df645264ba3dbea6d17f374a5afe83846be09fdb4c'
+PROXY_PASS =        'b4604382119649c7f6fdb81bb4071204ccebded8a31cc0f555605d5ce14a8bed'
+PROXY_IP =          '127.0.0.1'
+PROXY_PORT =        5001
 # -----------------------------------------------------------------------------------------------------
 
 # Inicia o proxy
