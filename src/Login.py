@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 WAIT = 10
 
@@ -49,11 +50,15 @@ class Login_process:
         except Exception as e:
                 print("Erro ao clicar no botão de finalizar login:", e)
 
-        # try:
-        #     wait.until(EC.presence_of_element_located(()))
-        #     print("Login realizado com sucesso!")
-        # except Exception as e:
-        #     print(f"Ocorreu um erro durante o processo de login: {e}")
+        try:
+            print("Aguardando confirmação de e-mail...")
+            wait_confirm = WebDriverWait(driver, 120)  # espera até 2 minutos enquanto confirma o e-mail
+            wait_confirm.until(EC.presence_of_element_located((By.CSS, " "))) # ADICIONAR SELETOR AQUI!!!! EX.: ICONE DAS NOTIFICAÇÕES
+            print("Login realizado com sucesso!")
+        except TimeoutException:
+            print("Tempo de espera pela confirmação do login esgotado.")
+        except Exception as e:
+            print(f"Ocorreu um erro durante o processo de login, Detalhes: {e}")
 
         finally:
             pass
