@@ -10,6 +10,7 @@ class BuyProccesss():
         self.NOME = name
         self.WAIT = wait
         self.PRICE = price
+        self.pix_codes = []
     
     def generate_fake_cpf(self, formatted=True):
         def calc_digit(digs):
@@ -231,6 +232,7 @@ class BuyProccesss():
                 if self.pix_code:
                     print("[*] Código Pix copiado com sucesso!")
                     print(f"-> {self.pix_code[:180]}...") 
+                    self.pix_codes.append(self.pix_code)
                 else:
                     print("[!] ERRO: O campo de input do Pix foi encontrado, mas está vazio.")
 

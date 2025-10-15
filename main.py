@@ -34,7 +34,7 @@ NOME = "Marcos Camargo Oliveira Bakker da Silva"
 WAIT = 10
 PRICE = "R$ " + "2,00"
 buy_process = BuyProccesss(NOME, WAIT, PRICE)
-NUM_PURCHASES = 1
+NUM_PURCHASES = 10
 
 # --- Configurações do EfiBank 
 PIX_KEY = ""
@@ -86,13 +86,14 @@ try:
     print("[*] Iniciando o processo de login.")
     login_process.login()
     
-    time.sleep(30)
-    
-    # print("[*] Iniciando o processo de compra.")
-    # for i in range(NUM_PURCHASES):
-    #   print(f"[*] Iniciando a compra {i+1} de {NUM_PURCHASES}.")
-    #   buy_process.buy()
-    #   driver.open(PAGE_URL)
+    print("[*] Iniciando o processo de compra.")
+    for i in range(NUM_PURCHASES):
+      print(f"[*] Iniciando a compra {i+1} de {NUM_PURCHASES}.")
+      buy_process.buy()
+      driver.open(PAGE_URL)
+      
+    for pix in buy_process.pix_codes:
+      print(f"[*] Código Pix da compra {buy_process.pix_codes.index(pix)+1}: {pix[:180]}...")
     
     
 except KeyboardInterrupt:
