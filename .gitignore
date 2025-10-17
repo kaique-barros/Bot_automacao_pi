@@ -4,3 +4,5 @@ __pycache__
 downloaded_files
 logs
 .env
+*.p12
+*.pem

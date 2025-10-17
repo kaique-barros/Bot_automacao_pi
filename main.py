@@ -1,22 +1,21 @@
-import time
 import ngrok
-import requests
 import threading
 import capsolver
 from src.proxy import Proxy
 from src.buyProcess import BuyProccesss
 from src.Login import Login_process
 from seleniumbase import Driver
+from src.efi_bank.pagamento import EfiPagamento
 
 # -----------------------------------------------------------------------------------------------------
 # ------------------- CONFIGURAÇÔES -------------------------------------------------------------------
 # --- Chaves de API
-CAPSOLVER_API_KEY = 'CAP-ED5DF302811B699CA76FC80712D56EF5044F6B693FFF7E5E53DCD377F7CF28B0'
-NGROK_KEY =         '33yZX8AEwoIrDQToGVY7lO4YXlS_2L2Q7Q9oFBC91DDb5mAMb'
+CAPSOLVER_API_KEY = 'SUA_CHAVE_DO_CAPSOLVER_COPIADA_AQUI'
+NGROK_KEY =         'SEU_AUTHTOKEN_DO_NGROK_COPIADO_AQUI'
 
 # --- Configurações do scrapper
-GGMAX_SITE_KEY =    '0x4AAAAAAADnPIDROrmt1Wwj' 
-PAGE_URL =          'https://ggmax.com.br/anuncio/venda-de-brinrots-raros-no-roblox-entrega-rapida-e-segura'
+GGMAX_SITE_KEY =    '0x4AAAAAAADnPIDROrmt1Wwj' # <- Mantenha esse valor 
+PAGE_URL =          'https://ggmax.com.br/anuncio/seu-anuncio-alvo-aqui'
 
 # --- Configurações do proxy
 PROXY_USER =        '98d5e8f4b835e0968ce439df645264ba3dbea6d17f374a5afe83846be09fdb4c'
@@ -25,22 +24,29 @@ PROXY_IP =          '127.0.0.1'
 PROXY_PORT =        5001
 
 # --- Configurações do login
-USUARIO = "kaique.barros@pijunior.com.br"
-SENHA = "Abc12345!"
-login_process = Login_process(USUARIO, SENHA)
+USUARIO =           "seu_usuario_ou_email_aqui"
+SENHA =             "sua_senha_super_secreta_aqui"
 
 # --- Configurações do processo de compra
-NOME = "Marcos Camargo Oliveira Bakker da Silva"
-WAIT = 10
-PRICE = "R$ " + "2,00"
-buy_process = BuyProccesss(NOME, WAIT, PRICE)
-NUM_PURCHASES = 10
+NOME =              "Seu Nome Completo Aqui"
+PRICE =             "2,00"
+NUM_COMPRAS =       10
+WAIT =              10
 
 # --- Configurações do EfiBank 
-PIX_KEY = ""
-INFO = "Pagamento de QR Code via API Pix"
-# -----------------------------------------------------------------------------------------------------
+CERTIFICADO =       'Caminho/para/seu/certificado.pem'
+CLIENT_ID =         'Client_Id_de_Producao_COPIADO_DAQUI'
+CLIENT_SECRET =     'Client_Secret_de_Producao_COPIADO_DAQUI'
+CHAVE_PIX =         'a8c2d1e4-f3g6-4h7i-j8k9-l0m1n2o3p4q5' # Exemplo de chave aleatória
 
+# ----------------------------------------------------------------------------------------------------
+
+
+
+login_process = Login_process(USUARIO, SENHA)
+
+PRICE = "R$ " + PRICE 
+buy_process = BuyProccesss(NOME, WAIT, PRICE)
 # Inicia o proxy
 proxy = Proxy(PROXY_USER, PROXY_PASS, PROXY_IP, PROXY_PORT)
 proxy_thread = threading.Thread(target=proxy.start_proxy, daemon=True)
@@ -65,6 +71,9 @@ try:
     "proxy": PROXY_CONNECTION
   })
   print(f'[*] Solução do captcha recebida: {solution['token'][:10]}')
+  
+  listener.close()
+  print("[*] Tunel do ngrok fechado.")
 
   with Driver(browser='chrome', uc=True, agent=solution['userAgent'], headless=False, port=9222) as driver:
     driver.open(PAGE_URL)
@@ -87,14 +96,16 @@ try:
     login_process.login()
     
     print("[*] Iniciando o processo de compra.")
-    for i in range(NUM_PURCHASES):
-      print(f"[*] Iniciando a compra {i+1} de {NUM_PURCHASES}.")
+    for i in range(NUM_COMPRAS):
+      print(f"[*] Iniciando a compra {i+1} de {NUM_COMPRAS}.")
       buy_process.buy()
       driver.open(PAGE_URL)
       
+    print("[*] Iniciando o pagamento via EfiBank.")
     for pix in buy_process.pix_codes:
       print(f"[*] Código Pix da compra {buy_process.pix_codes.index(pix)+1}: {pix[:180]}...")
-    
+      efi_instance = EfiPagamento(CERTIFICADO, NGROK_KEY, CLIENT_ID, CLIENT_SECRET, CHAVE_PIX, PROXY_PORT)
+      efi_instance.pagar_qrCode(pix)
     
 except KeyboardInterrupt:
   print("Execução encerrada.")
