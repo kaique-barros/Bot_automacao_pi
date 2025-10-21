@@ -56,6 +56,4 @@ class EfiPagamento:
         if response['status'] == 'EM_PROCESSAMENTO':
             print(f"[*] Pagamento no valor de {response['valor']} realizado.")
                 
-                
-efi_instance = EfiPagamento('', '', '', '', '', 5001)
-efi_instance.pagar_qrCode("00020126330014br.gov.bcb.pix01114377307681952040000530398654040.015802BR5919Kaique Barros Silva6009Sao Paulo62290525REC68F265B8EF74466433135263049C38")
+                 
